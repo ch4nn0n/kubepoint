@@ -1,0 +1,6 @@
+domain: kubepoint.io
+layout:
+- go.kubebuilder.io/v3
+projectName: kubepoint
+repo: kubepoint.io/kubepoint
+version: "3"
