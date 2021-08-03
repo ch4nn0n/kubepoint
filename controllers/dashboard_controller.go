@@ -137,8 +137,7 @@ func (r *DashboardReconciler) Reconcile(ctx context.Context, req ctrl.Request) (
 							},
 							VolumeMounts: []corev1.VolumeMount{{
 								Name:      "config",
-								MountPath: "/www/assets/config.yml",
-								SubPath:   "config.yml",
+								MountPath: "/www/assets",
 								ReadOnly:  true,
 							}},
 						}},
