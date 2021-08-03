@@ -43,6 +43,7 @@ type DashboardReconciler struct {
 //+kubebuilder:rbac:groups=kubepoint.io,resources=dashboards/finalizers,verbs=update
 //+kubebuilder:rbac:groups=core,resources=configmaps,verbs=get;list;watch;create;update;patch;delete
 //+kubebuilder:rbac:groups=apps,resources=replicasets,verbs=get;list;watch;create;update;patch;delete
+//+kubebuilder:rbac:groups=core,resources=services,verbs=get;list;watch;create;update;patch;delete
 
 // Reconcile is part of the main kubernetes reconciliation loop which aims to
 // move the current state of the cluster closer to the desired state.
@@ -166,6 +167,37 @@ func (r *DashboardReconciler) Reconcile(ctx context.Context, req ctrl.Request) (
 		log.Error(err, "unable to construct replicaSet from template")
 	}
 
+	constructDashboardService := func(dashboard *kp.Dashboard) (*corev1.Service, error) {
+		name := fmt.Sprintf("%s-%s", "kubepoint", dashboard.Name)
+
+		service := corev1.Service{
+			ObjectMeta: metav1.ObjectMeta{
+				Name:      name,
+				Namespace: dashboard.Namespace,
+			},
+			Spec: corev1.ServiceSpec{
+				Ports: []corev1.ServicePort{{
+					Name: "http",
+					Port: 80,
+					TargetPort: intstr.IntOrString{
+						IntVal: 8080,
+					},
+				}},
+				Selector: map[string]string{
+					"app":       "kubepoint",
+					"dashboard": name,
+				},
+				Type: corev1.ServiceTypeClusterIP,
+			},
+		}
+		if err := ctrl.SetControllerReference(dashboard, &service, r.Scheme); err != nil {
+			return nil, err
+		}
+
+		return &service, nil
+	}
+	service, err := constructDashboardService(&dashboard)
+
 	if err := r.Create(ctx, configMap); err != nil {
 		log.Error(err, "unable to create config for Dashboard")
 		return ctrl.Result{}, err
@@ -177,6 +209,12 @@ func (r *DashboardReconciler) Reconcile(ctx context.Context, req ctrl.Request) (
 		return ctrl.Result{}, err
 	}
 	log.V(1).Info("created replicaSet for Dashboard")
+
+	if err := r.Create(ctx, service); err != nil {
+		log.Error(err, "unable to create service for Dashboard")
+		return ctrl.Result{}, err
+	}
+	log.V(1).Info("created service for Dashboard")
 
 	return ctrl.Result{}, nil
 }
