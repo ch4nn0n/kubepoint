@@ -28,8 +28,20 @@ type DashboardSpec struct {
 	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
 
-	// Foo is an example field of Dashboard. Edit dashboard_types.go to remove/update
-	Foo string `json:"foo,omitempty"`
+	//+kubebuilder:validation:MinLength=0
+	// Dashboard title
+	Title string `json:"title"`
+
+	// Dashboard subtitle
+	// +optional
+	Subtitle string `json:"subtitle,omitempty"`
+
+	// Dashboard logo
+	// Either a path or a fa icon can be provided, examples:
+	// - https://kubepointer.io/logo
+	// - fas fa-cloud
+	// +optional
+	Logo string `json:"logo,omitempty"`
 }
 
 // DashboardStatus defines the observed state of Dashboard

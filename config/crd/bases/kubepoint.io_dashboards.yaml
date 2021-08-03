@@ -36,10 +36,19 @@ spec:
           spec:
             description: DashboardSpec defines the desired state of Dashboard
             properties:
-              foo:
-                description: Foo is an example field of Dashboard. Edit dashboard_types.go
-                  to remove/update
+              logo:
+                description: 'Dashboard logo Either a path or a fa icon can be provided,
+                  examples: - https://kubepointer.io/logo - fas fa-cloud'
                 type: string
+              subtitle:
+                description: Dashboard subtitle
+                type: string
+              title:
+                description: Dashboard title
+                minLength: 0
+                type: string
+            required:
+            - title
             type: object
           status:
             description: DashboardStatus defines the observed state of Dashboard
