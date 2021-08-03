@@ -64,7 +64,31 @@ func (r *DashboardReconciler) Reconcile(ctx context.Context, req ctrl.Request) (
 	}
 
 	constructDashboardConfig := func(dashboard *kp.Dashboard) string {
-		yaml, err := yaml.Marshal(dashboard.Spec)
+		type ItemsConfig struct {
+			Items []kp.LinkSpec `json:"items"`
+		}
+		type DashboardConfig struct {
+			Dashboard kp.DashboardSpec `json:"dashboard"`
+			Services  []ItemsConfig    `json:"services"`
+		}
+
+		var links kp.LinkList
+		if err := r.List(ctx, &links); err != nil {
+			log.Error(err, "unable to list links")
+		}
+
+		dc := DashboardConfig{
+			Dashboard: dashboard.Spec,
+			Services: []ItemsConfig{{
+				[]kp.LinkSpec{},
+			}},
+		}
+
+		for _, l := range links.Items {
+			dc.Services[0].Items = append(dc.Services[0].Items, l.Spec)
+		}
+
+		yaml, err := yaml.Marshal(dc)
 		if err != nil {
 			log.Error(err, "unable to unmarshal config to yaml")
 		}
