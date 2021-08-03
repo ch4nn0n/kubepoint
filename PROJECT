@@ -12,4 +12,11 @@ resources:
   kind: Dashboard
   path: kubepoint.io/kubepoint/api/v1alpha1
   version: v1alpha1
+- api:
+    crdVersion: v1
+    namespaced: true
+  domain: kubepoint.io
+  kind: Link
+  path: kubepoint.io/kubepoint/api/v1alpha1
+  version: v1alpha1
 version: "3"
