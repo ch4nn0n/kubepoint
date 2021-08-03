@@ -3,4 +3,13 @@ layout:
 - go.kubebuilder.io/v3
 projectName: kubepoint
 repo: kubepoint.io/kubepoint
+resources:
+- api:
+    crdVersion: v1
+    namespaced: true
+  controller: true
+  domain: kubepoint.io
+  kind: Dashboard
+  path: kubepoint.io/kubepoint/api/v1alpha1
+  version: v1alpha1
 version: "3"
