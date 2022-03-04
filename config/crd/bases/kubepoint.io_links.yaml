@@ -1,0 +1,87 @@
+
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.4.1
+  creationTimestamp: null
+  name: links.kubepoint.io
+spec:
+  group: kubepoint.io
+  names:
+    kind: Link
+    listKind: LinkList
+    plural: links
+    singular: link
+  scope: Namespaced
+  versions:
+  - name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: Link is the Schema for the links API
+        properties:
+          apiVersion:
+            description: 'APIVersion defines the versioned schema of this representation
+              of an object. Servers should convert recognized schemas to the latest
+              internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+            type: string
+          kind:
+            description: 'Kind is a string value representing the REST resource this
+              object represents. Servers may infer this from the endpoint the client
+              submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: LinkSpec defines the desired state of Link
+            properties:
+              background:
+                description: Background to set color for the card directly
+                type: string
+              logo:
+                description: Logo
+                type: string
+              name:
+                description: Link name
+                type: string
+              subtitle:
+                description: Subtitle
+                type: string
+              tag:
+                description: Tag
+                type: string
+              tagStyle:
+                description: 'Tag style Can be set to any of the bulma modifiers,
+                  thought you probably want to use: - is-info (blue) - is-success
+                  (green) - is-warning (yellow) - is-danger (red) https://bulma.io/documentation/overview/modifiers/'
+                type: string
+              target:
+                description: Target HTML target tag
+                type: string
+              type:
+                description: Type Loads a specific component that provides extra features.
+                  MUST MATCH a file name (without file extension) available in `https://github.com/bastienwirtz/homer/tree/main/src/components/services`
+                type: string
+              url:
+                description: Target url
+                type: string
+            required:
+            - background
+            - name
+            - url
+            type: object
+          status:
+            description: LinkStatus defines the observed state of Link
+            type: object
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}
+status:
+  acceptedNames:
+    kind: ""
+    plural: ""
+  conditions: []
+  storedVersions: []
