@@ -30,8 +30,41 @@ type LinkSpec struct {
 
 	// Link name
 	Name string `json:"name"`
+	// Subtitle
+	// +optional
+	Subtitle string `json:"subtitle"`
 	// Target url
 	Url string `json:"url"`
+	// Logo
+	// +optional
+	Logo string `json:"logo"`
+	// Icon
+	// +optional
+	Icon string `json:"icon"`
+	// Tag
+	// +optional
+	Tag string `json:"tag"`
+	// Tag style
+	// Can be set to any of the bulma modifiers, thought you probably want to use:
+	// - is-info (blue)
+	// - is-success (green)
+	// - is-warning (yellow)
+	// - is-danger (red)
+	// https://bulma.io/documentation/overview/modifiers/
+	// +optional
+	TagStyle string `json:"tagStyle"`
+	// Type
+	// Loads a specific component that provides extra features.
+	// MUST MATCH a file name (without file extension) available in `https://github.com/bastienwirtz/homer/tree/main/src/components/services`
+	// +optional
+	Type string `json:"type"`
+	// Target HTML target tag
+	// +optional
+	Target string `json:"target"`
+	// Background
+	// to set color for the card directly
+	// + optional
+	Background string `json:"background"`
 }
 
 // LinkStatus defines the observed state of Link

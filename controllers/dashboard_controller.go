@@ -63,6 +63,13 @@ func (r *DashboardReconciler) Reconcile(ctx context.Context, req ctrl.Request) (
 		return ctrl.Result{}, client.IgnoreNotFound(err)
 	}
 
+	//opts := client.ListOptions{
+	//	LabelSelector: labels.SelectorFromSet(map[string]string{
+	//		"app": "kubepoint",
+	//	}),
+	//}
+	//, client.InNamespace(req.Namespace), &opts
+
 	constructDashboardConfig := func(dashboard *kp.Dashboard) string {
 		type ItemsConfig struct {
 			Items []kp.LinkSpec `json:"items"`

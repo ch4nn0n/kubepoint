@@ -31,17 +31,21 @@ type DashboardSpec struct {
 	//+kubebuilder:validation:MinLength=0
 	// Dashboard title
 	Title string `json:"title"`
-
 	// Dashboard subtitle
 	// +optional
 	Subtitle string `json:"subtitle,omitempty"`
-
 	// Dashboard logo
 	// Either a path or a fa icon can be provided, examples:
 	// - https://kubepointer.io/logo
 	// - fas fa-cloud
 	// +optional
-	Logo string `json:"logo,omitempty"`
+	Logo              string `json:"logo,omitempty"`
+	Icon              string `json:"icon,omitempty"` // cannot use logo and icon
+	Header            bool   `json:"header,omitempty"`
+	Footer            string `json:"footer,omitempty"`
+	Columns           string `json:"footer,omitempty"`
+	ConnectivityCheck bool   `json:"footer,omitempty"`
+	Theme             string `json:"theme,omitempty"`
 }
 
 // DashboardStatus defines the observed state of Dashboard

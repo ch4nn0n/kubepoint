@@ -36,13 +36,38 @@ spec:
           spec:
             description: LinkSpec defines the desired state of Link
             properties:
+              background:
+                description: Background to set color for the card directly
+                type: string
+              logo:
+                description: Logo
+                type: string
               name:
                 description: Link name
+                type: string
+              subtitle:
+                description: Subtitle
+                type: string
+              tag:
+                description: Tag
+                type: string
+              tagStyle:
+                description: 'Tag style Can be set to any of the bulma modifiers,
+                  thought you probably want to use: - is-info (blue) - is-success
+                  (green) - is-warning (yellow) - is-danger (red) https://bulma.io/documentation/overview/modifiers/'
+                type: string
+              target:
+                description: Target HTML target tag
+                type: string
+              type:
+                description: Type Loads a specific component that provides extra features.
+                  MUST MATCH a file name (without file extension) available in `https://github.com/bastienwirtz/homer/tree/main/src/components/services`
                 type: string
               url:
                 description: Target url
                 type: string
             required:
+            - background
             - name
             - url
             type: object
